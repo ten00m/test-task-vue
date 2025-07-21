@@ -8,14 +8,6 @@
         columns: Array<string>
     })
 
-    const columns = [
-        'Метка',
-        'Тип записи',
-        'Логин',
-        'Пароль',
-        'Удалить'
-    ]
-
 </script>
 
 <template>

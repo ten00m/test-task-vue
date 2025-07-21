@@ -6,6 +6,14 @@
 
     const accounts = ref<Array<Account>>([]);
 
+    const columns = [
+        'Метка',
+        'Тип записи',
+        'Логин',
+        'Пароль',
+        'Удалить'
+    ]
+
     const createAccountTemplate = (e: MouseEvent): void => {
         const account: Account = {
             key: accounts.value.length,
@@ -15,15 +23,19 @@
             password: '',
         }
         accounts.value.push(account);
-        console.log(accounts.value)
     }
 </script>
 
 <template>
     <main>
         <div class="accounts">
-            <Header :create-account-template="createAccountTemplate" />
-            <AccountTable :accounts="accounts"/>
+            <Header 
+                :create-account-template="createAccountTemplate" 
+            />
+            <AccountTable 
+                :accounts="accounts"
+                :columns="columns"
+            />
         </div>
     </main>
 </template>
