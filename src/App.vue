@@ -33,7 +33,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 1000px;
+        width: 1100px;
         min-height: 0px;
         border: 2px solid gray;
         padding: 10px;
