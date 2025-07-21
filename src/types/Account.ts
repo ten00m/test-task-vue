@@ -1,10 +1,25 @@
 export interface Account{
     key: number;
-    marks: string;
+    mark: string;
     type: TypeOfAccount;
     login: string;
     password: string;
-    delete: (account: Account) => void;
 }
 
-type TypeOfAccount = 'LDAP' | 'Локальная'
+export type TypeOfAccount = 'LDAP' | 'Локальная'
+
+type options = {
+    label: string;
+    value: string;
+    disabled?: boolean
+}
+export const typesOfAccount: Array<options> = [
+    {
+        label: 'LDAP',
+        value: 'LDAP'
+    },
+    {
+        label: 'Локальная',
+        value: 'Локальная'
+    }
+]
