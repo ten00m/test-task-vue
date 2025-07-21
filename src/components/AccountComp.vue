@@ -1,12 +1,28 @@
 <script setup lang="ts">
     import type {Account} from '../types/Account'
-    import {NButton} from 'naive-ui'
+    import {NButton, type FormValidationStatus} from 'naive-ui'
     import { NInput } from 'naive-ui';
     import { NSelect } from 'naive-ui';
     import {typesOfAccount} from '../types/Account'
+    import { ref } from 'vue';
+    import  {validateLogin, validatePassword} from '../composables/validation'
 
     interface Props{
         account: Account
+    }
+
+    type IsValid = {
+        pass: boolean;
+        login: boolean
+    }
+
+    const isValid = ref<IsValid>({
+        pass: true,
+        login: true
+    })
+
+    const getInputStatus = (isValid: boolean): FormValidationStatus => {
+        return isValid ? 'success' : 'error'
     }
 
     defineProps<Props>();
@@ -19,6 +35,7 @@
             <NInput 
                 v-model:value="account.mark" 
                 placeholder="Метка"
+                :maxlength="50"
             />
         </td>
         <td>
@@ -31,7 +48,9 @@
             <NInput 
                 v-model:value="account.login" 
                 placeholder="Логин"
-                :maxlength="50"
+                :maxlength="100"
+                :status="getInputStatus(isValid.login)"
+                @blur="() => {isValid.login = validateLogin(account.login)}"
             />
         </td>
         <td>
@@ -40,7 +59,9 @@
                 placeholder="Метка"
                 type="password"
                 show-password-on="click"
-                :maxlength="50"
+                :maxlength="100"
+                :status="getInputStatus(isValid.pass)"
+                @blur="() => {isValid.pass = validatePassword(account.password)}"
             />
         </td>
         <td>
