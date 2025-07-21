@@ -17,8 +17,8 @@
     }
 
     const isValid = ref<IsValid>({
-        pass: true,
-        login: true
+        pass: false,
+        login: false
     })
 
     const getInputStatus = (isValid: boolean): FormValidationStatus => {
