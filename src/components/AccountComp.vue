@@ -51,12 +51,14 @@
             <NSelect
                 v-model:value="account.type"
                 :options="typesOfAccount"
-                :on-update-value="() => {
+                :on-change="() => {
                     if(account.type === 'Локальная'){
                         account.password = ''
                     } else{
                         account.password = null
                     }
+                    isValid.login = validateLogin(account.login)
+                    console.log(validatePassword(account.password), account)
                     updateAccounts(account)
                 }"
             />

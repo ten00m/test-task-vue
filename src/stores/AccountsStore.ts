@@ -27,16 +27,12 @@ export const useAccountsStore = defineStore('accountStore', () => {
         localStorage.setItem('accounts', JSON.stringify(validatedAccs))
     }
 
-    const changeIsValid = (acc: Account, isValid: boolean): void => {
-        accounts.value[acc.key].isValid = isValid
-    }
-
     const deleteAcc =  (acc: Account): void => {
         accounts.value = [...accounts.value.slice(0, acc.key), ...accounts.value.slice(acc.key + 1)]
         updateAccountsInLc()
     }
 
     return {
-        accounts, addNewAccount, updateAccountsInLc, changeIsValid, deleteAcc
+        accounts, addNewAccount, updateAccountsInLc, deleteAcc
     }
 })
