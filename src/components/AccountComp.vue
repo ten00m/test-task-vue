@@ -1,19 +1,22 @@
 <script setup lang="ts">
-    import type {Account} from '../types/Account'
-    import {NButton, type FormValidationStatus} from 'naive-ui'
+    import type {Account} from '../types/Account';
+    import {NButton, type FormValidationStatus} from 'naive-ui';
     import { NInput } from 'naive-ui';
     import { NSelect } from 'naive-ui';
-    import {typesOfAccount} from '../types/Account'
+    import {typesOfAccount} from '../types/Account';
     import { ref } from 'vue';
-    import  {validateLogin, validatePassword} from '../composables/validation'
+    import  {validateLogin, validatePassword} from '../composables/validation';
     import { useAccountsStore } from '@/stores/AccountsStore';
+
     interface Props{
         account: Account
     }
-
-    defineProps<Props>();
+    const props = defineProps<Props>();
 
     const accountsStore = useAccountsStore();
+
+    console.log(props.account)
+    const markStr = ref<string>(props.account.mark.map(e => e.text).join(';'))
 
     type IsValid = {
         pass: boolean;
@@ -41,6 +44,10 @@
         }
     }
 
+    const updateMark = (acc: Account) => {
+        acc.mark = markStr.value.split(';').map(e => { return {text: e}})
+    }
+
 
 </script>
 
@@ -48,9 +55,13 @@
     <tr>
         <td>
             <NInput 
-                v-model:value="account.mark" 
+                v-model:value="markStr"
                 placeholder="Метка"
                 :maxlength="50"
+                @blur="() => {
+                    updateMark(account)
+                    updateAccounts(account)
+                }"
             />
         </td>
         <td>

@@ -13,7 +13,7 @@ export const useAccountsStore = defineStore('accountStore', () => {
     const addNewAccount = () => {
         const newAccount: Account = {
             key: accounts.value.length,
-            mark: '',
+            mark: [],
             type: 'Локальная',
             login: '',
             password: '',
@@ -24,6 +24,7 @@ export const useAccountsStore = defineStore('accountStore', () => {
 
     const updateAccountsInLc = (): void => {
         const validatedAccs: Array<Account> = accounts.value.filter(acc => acc.isValid);
+        console.log(validatedAccs[0].mark)
         localStorage.setItem('accounts', JSON.stringify(validatedAccs))
     }
 
