@@ -1,6 +1,6 @@
 export interface Account{
     key: number;
-    mark: string;
+    mark: string[];
     type: TypeOfAccount;
     login: string;
     password: string | null;
