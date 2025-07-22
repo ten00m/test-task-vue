@@ -3,8 +3,7 @@ export interface Account{
     mark: string;
     type: TypeOfAccount;
     login: string;
-    password: string;
-    isValid: boolean
+    password: string | null;
 }
 
 export type TypeOfAccount = 'LDAP' | 'Локальная'

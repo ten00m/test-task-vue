@@ -21,7 +21,7 @@
     <main>
         <div class="accounts">
             <Header 
-                :create-account-template="accountStore.addAccount" 
+                :create-account-template="accountStore.addNewAccount" 
             />
             <AccountTable 
                 :accounts="accountStore.accounts"

@@ -3,8 +3,14 @@ import type {Account} from '../types/Account'
 import {ref} from 'vue'
 
 export const useAccountStore = defineStore('accountStore', () => {
-    const accounts = ref<Array<Account>>([]);
-    const addAccount = () => {
+    let accounts = ref<Array<Account>>([]);
+    const accountsInLS = localStorage.getItem('accounts');
+
+    if(accountsInLS){
+        accounts = JSON.parse(accountsInLS);
+    }
+
+    const addNewAccount = () => {
         const newAccount: Account = {
             key: accounts.value.length,
             mark: '',
@@ -15,7 +21,11 @@ export const useAccountStore = defineStore('accountStore', () => {
         accounts.value.push(newAccount);
     }
 
+    const updateAccount = (acc: Account) => {
+
+    }
+
     return {
-        accounts, addAccount
+        accounts, addNewAccount
     }
 })
