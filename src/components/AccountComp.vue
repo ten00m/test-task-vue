@@ -32,7 +32,7 @@
     const updateAccounts = (account: Account) => {
         account.isValid = validateLogin(account.login) && validatePassword(account.password)
         if(account.isValid){
-            accountsStore.updateAccountsInLc(account)
+            accountsStore.updateAccountsInLc()
         }
     }
 
@@ -51,6 +51,14 @@
             <NSelect
                 v-model:value="account.type"
                 :options="typesOfAccount"
+                :on-update-value="() => {
+                    if(account.type === 'Локальная'){
+                        account.password = ''
+                    } else{
+                        account.password = null
+                    }
+                    updateAccounts(account)
+                }"
             />
         </td>
         <td
@@ -73,7 +81,7 @@
         >
             <NInput
                 v-model:value="account.password"
-                placeholder="Метка"
+                placeholder="Пароль"
                 type="password"
                 show-password-on="click"
                 :maxlength="100"
@@ -85,7 +93,9 @@
             />
         </td>
         <td>
-            <NButton>
+            <NButton
+                @click="(e) => {accountsStore.deleteAcc(account)}"
+            >
                 del
             </NButton>
         </td>
