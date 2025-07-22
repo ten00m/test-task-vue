@@ -5,5 +5,5 @@ export const validateLogin = (login: string): boolean => {
 }
 
 export const validatePassword = (pass: string | null): boolean => {
-    return pass?.length ? true : false;
+    return Boolean(pass?.length) || pass === null
 }

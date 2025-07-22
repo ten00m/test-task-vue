@@ -30,7 +30,7 @@
     }
 
     const updateAccounts = (account: Account) => {
-        account.isValid = isValid.value.login && isValid.value.pass
+        account.isValid = validateLogin(account.login) && validatePassword(account.password)
         if(account.isValid){
             accountsStore.updateAccountsInLc(account)
         }
@@ -53,7 +53,9 @@
                 :options="typesOfAccount"
             />
         </td>
-        <td>
+        <td
+            :colspan="account.type === 'Локальная' ? 1 : 2" 
+        >
             <NInput 
                 v-model:value="account.login" 
                 placeholder="Логин"
@@ -66,8 +68,10 @@
                 
             />
         </td>
-        <td>
-            <NInput 
+        <td
+            v-if="account.type === 'Локальная'" 
+        >
+            <NInput
                 v-model:value="account.password"
                 placeholder="Метка"
                 type="password"
