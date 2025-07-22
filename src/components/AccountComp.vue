@@ -29,12 +29,18 @@
         return isValid ? 'success' : 'error'
     }
 
+    const validate = (acc: Account) => {
+        isValid.value.login = validateLogin(acc.login);
+        isValid.value.pass = validatePassword(acc.password);
+    }
+
     const updateAccounts = (account: Account) => {
         account.isValid = validateLogin(account.login) && validatePassword(account.password)
         if(account.isValid){
             accountsStore.updateAccountsInLc()
         }
     }
+
 
 </script>
 
@@ -51,14 +57,9 @@
             <NSelect
                 v-model:value="account.type"
                 :options="typesOfAccount"
-                :on-change="() => {
-                    if(account.type === 'Локальная'){
-                        account.password = ''
-                    } else{
-                        account.password = null
-                    }
-                    isValid.login = validateLogin(account.login)
-                    console.log(validatePassword(account.password), account)
+                v-on:update:value="() => {
+                    account.type === 'Локальная' ? account.password = '' : account.password = null 
+                    validate(account)
                     updateAccounts(account)
                 }"
             />
@@ -72,7 +73,7 @@
                 :maxlength="100"
                 :status="getInputStatus(isValid.login)"
                 @blur="() => {
-                    isValid.login = validateLogin(account.login)
+                    validate(account)
                     updateAccounts(account)
                 }"
                 
@@ -89,7 +90,7 @@
                 :maxlength="100"
                 :status="getInputStatus(isValid.pass)"
                 @blur="() => {
-                    isValid.pass = validatePassword(account.password);
+                    validate(account)
                     updateAccounts(account)
                 }"
             />
