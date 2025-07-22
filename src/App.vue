@@ -3,8 +3,9 @@
     import AccountTable from './components/AccountsTable.vue'
     import type { Account } from './types/Account';
     import { ref } from 'vue';
+    import { useAccountStore } from './stores/AccountsStore';
 
-    const accounts = ref<Array<Account>>([]);
+    const accountStore = useAccountStore()
 
     const columns = [
         'Метка',
@@ -13,27 +14,17 @@
         'Пароль',
         'Удалить'
     ]
-
-    const createAccountTemplate = (e: MouseEvent): void => {
-        const account: Account = {
-            key: accounts.value.length,
-            mark: '',
-            type: 'Локальная',
-            login: '',
-            password: '',
-        }
-        accounts.value.push(account);
-    }
+    
 </script>
 
 <template>
     <main>
         <div class="accounts">
             <Header 
-                :create-account-template="createAccountTemplate" 
+                :create-account-template="accountStore.addAccount" 
             />
             <AccountTable 
-                :accounts="accounts"
+                :accounts="accountStore.accounts"
                 :columns="columns"
             />
         </div>
