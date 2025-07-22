@@ -6,10 +6,14 @@
     import {typesOfAccount} from '../types/Account'
     import { ref } from 'vue';
     import  {validateLogin, validatePassword} from '../composables/validation'
-
+    import { useAccountsStore } from '@/stores/AccountsStore';
     interface Props{
         account: Account
     }
+
+    defineProps<Props>();
+
+    const accountsStore = useAccountsStore();
 
     type IsValid = {
         pass: boolean;
@@ -17,15 +21,20 @@
     }
 
     const isValid = ref<IsValid>({
-        pass: false,
-        login: false
+        pass: true,
+        login: true
     })
 
     const getInputStatus = (isValid: boolean): FormValidationStatus => {
         return isValid ? 'success' : 'error'
     }
 
-    defineProps<Props>();
+    const updateAccounts = (account: Account) => {
+        account.isValid = isValid.value.login && isValid.value.pass
+        if(account.isValid){
+            accountsStore.updateAccountsInLc(account)
+        }
+    }
 
 </script>
 
@@ -50,7 +59,11 @@
                 placeholder="Логин"
                 :maxlength="100"
                 :status="getInputStatus(isValid.login)"
-                @blur="() => {isValid.login = validateLogin(account.login)}"
+                @blur="() => {
+                    isValid.login = validateLogin(account.login)
+                    updateAccounts(account)
+                }"
+                
             />
         </td>
         <td>
@@ -61,7 +74,10 @@
                 show-password-on="click"
                 :maxlength="100"
                 :status="getInputStatus(isValid.pass)"
-                @blur="() => {isValid.pass = validatePassword(account.password)}"
+                @blur="() => {
+                    isValid.pass = validatePassword(account.password);
+                    updateAccounts(account)
+                }"
             />
         </td>
         <td>

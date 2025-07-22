@@ -1,11 +1,9 @@
 <script setup lang="ts">
     import Header from './components/Header.vue'
     import AccountTable from './components/AccountsTable.vue'
-    import type { Account } from './types/Account';
-    import { ref } from 'vue';
-    import { useAccountStore } from './stores/AccountsStore';
+    import { useAccountsStore } from './stores/AccountsStore';
 
-    const accountStore = useAccountStore()
+    const accountStore = useAccountsStore()
 
     const columns = [
         'Метка',
