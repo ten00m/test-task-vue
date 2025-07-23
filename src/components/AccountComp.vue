@@ -15,7 +15,6 @@
 
     const accountsStore = useAccountsStore();
 
-    console.log(props.account)
     const markStr = ref<string>(props.account.mark.map(e => e.text).join(';'))
 
     type IsValid = {

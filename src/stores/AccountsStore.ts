@@ -24,12 +24,13 @@ export const useAccountsStore = defineStore('accountStore', () => {
 
     const updateAccountsInLc = (): void => {
         const validatedAccs: Array<Account> = accounts.value.filter(acc => acc.isValid);
-        console.log(validatedAccs[0].mark)
         localStorage.setItem('accounts', JSON.stringify(validatedAccs))
     }
 
     const deleteAcc =  (acc: Account): void => {
+        acc.key = accounts.value.indexOf(acc)
         accounts.value = [...accounts.value.slice(0, acc.key), ...accounts.value.slice(acc.key + 1)]
+        console.log([...accounts.value.slice(0, acc.key)])
         updateAccountsInLc()
     }
 
